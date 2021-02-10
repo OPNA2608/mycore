@@ -34,7 +34,7 @@ import javax.xml.validation.SchemaFactory;
 
 import org.jdom2.Document;
 import org.jdom2.transform.JDOMSource;
-import org.mycore.backend.hibernate.MCRHIBConnection;
+import org.mycore.backend.jpa.MCREntityManagerProvider;
 import org.mycore.common.MCRClassTools;
 import org.mycore.common.config.MCRConfigurationException;
 import org.mycore.common.content.transformer.MCRContentTransformer;
@@ -154,7 +154,7 @@ public abstract class MCRDOIBaseService extends MCRPIJobService<MCRDigitalObject
 
         MCRPI databaseEntry = new MCRPI(identifier.asString(), getType(), obj.getId().toString(), additional,
             this.getServiceID(), provideRegisterDate(obj, additional), registrationStarted);
-        MCRHIBConnection.instance().getSession().save(databaseEntry);
+        MCREntityManagerProvider.getCurrentEntityManager().persist(databaseEntry);
         return databaseEntry;
     }
 
